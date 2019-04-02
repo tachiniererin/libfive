@@ -1,0 +1,20 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: "ubuntu:18.10"
+    steps:
+      - checkout
+      - run:
+          name: Install sudo
+          command: 'apt-get update && apt-get install -y cmake pkg-config libeigen3-dev libpng-dev libboost-all-dev qtbase5-dev guile-2.2-dev'
+      - run:
+          name: Creating build files
+          command: 'cmake -H. -Bbuild'
+      - run:
+          name: Building binaries
+          command: 'cmake --build build'
+      - run:
+          name: Running unit tests
+          command: './build/libfive/test/libfive-test'
