@@ -26,7 +26,7 @@ jobs:
         - cd build
         - cmake ../. ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS}
         - make
-        - ./libfive/test/libfive-test
+        #- ./libfive/test/libfive-test
     - stage build-win32:
       if: os = windows
       script:
@@ -36,4 +36,4 @@ jobs:
         - md build
         - cd build
         - cmake -DCMAKE_TOOLCHAIN_FILE="..\vcpkg\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET="x86-windows-static" -G "Visual Studio 15 2017" ..
-        - libfive/test/libfive-test
+        #- libfive/test/libfive-test
