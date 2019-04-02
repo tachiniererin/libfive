@@ -13,14 +13,27 @@ matrix:
             - qt
             - guile
             - boost
+    - os: windows
 
-env:
-  global:
-    - MAKEFLAGS="-j2"
-
-script:
-  - mkdir build
-  - cd build
-  - cmake ../. ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS}
-  - make
-  - ./libfive/test/libfive-test
+jobs:
+  include:
+    - stage build-osx:
+      if: os = osx
+      env:
+      - MAKEFLAGS="-j2"
+      script:
+        - mkdir build
+        - cd build
+        - cmake ../. ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS}
+        - make
+        - ./libfive/test/libfive-test
+    - stage build-win32:
+      if: os = windows
+      script:
+        - git clone https://github.com/Microsoft/vcpkg.git
+        - vcpkg\bootstrap-vcpkg.bat
+        - vcpkg\vcpkg install eigen3:x86-windows-static boost:x86-windows-static libpng:x86-windows-static
+        - md build
+        - cd build
+        - cmake -DCMAKE_TOOLCHAIN_FILE="..\vcpkg\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET="x86-windows-static" -G "Visual Studio 15 2017" ..
+        - libfive/test/libfive-test
