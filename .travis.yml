@@ -1,0 +1,26 @@
+language: cpp
+
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode10.2
+      addons:
+          homebrew:
+            packages:
+            - pkg-config
+            - eigen
+            - libpng
+            - qt
+            - guile
+            - boost
+
+env:
+  global:
+    - MAKEFLAGS="-j2"
+
+script:
+  - mkdir build
+  - cd build
+  - cmake ../. ${CMAKE_OPTIONS} -DCMAKE_CXX_FLAGS=${CXX_FLAGS}
+  - make
+  - ./libfive/test/libfive-test
