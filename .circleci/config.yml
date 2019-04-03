@@ -15,6 +15,6 @@ jobs:
       - run:
           name: Building binaries
           command: 'cmake --build build'
-      - run:
-          name: Running unit tests
-          command: './build/libfive/test/libfive-test'
+      #- run:
+      #    name: Running unit tests
+      #    command: './build/libfive/test/libfive-test'

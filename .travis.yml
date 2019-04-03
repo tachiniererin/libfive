@@ -19,6 +19,7 @@ jobs:
   include:
     - stage build-osx:
       if: os = osx
+      compiler: gcc
       env:
       - MAKEFLAGS="-j2"
       script:
@@ -29,6 +30,7 @@ jobs:
         #- ./libfive/test/libfive-test
     - stage build-win32:
       if: os = windows
+      compiler: gcc
       script:
         - git clone https://github.com/Microsoft/vcpkg.git
         - vcpkg\bootstrap-vcpkg.bat
